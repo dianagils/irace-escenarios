@@ -5,6 +5,7 @@
 - **Instancias:** QAP de 60 facilidades, 30 de train y 30 de test, sin instancias en común. `instancias/InstancesQAP/` también trae las de 80 y 100 facilidades, por si se quieren usar.
 - **Objetivo que se minimiza:** costo de la mejor solución, es decir la última línea `best <costo>` de `ilsqap`.
 - **Tiempo por ejecución:** `TIME_LIMIT` segundos, 10 por defecto (`--trials 1 --time 10`).
+- **Presupuesto:** los experimentos usaron 1.000 y 5.000 evaluaciones por corrida. En las carpetas de resultados aparecen como "1M" y "5M", aunque son miles y no millones. `MAX_EXPERIMENTS=1000` es el valor por defecto; para 5.000 se usa `--budget 5000`.
 
 ## Subsets (h-irace)
 
@@ -36,7 +37,8 @@ bash escenarios/ILSQAP/setup.sh   # compila src/ils-qap (gcc, make) y lo prueba
 
 ```bash
 python3 scripts/Ejecutor.py ILSQAP irace
-python3 scripts/Ejecutor.py ILSQAP h-irace
+python3 scripts/Ejecutor.py ILSQAP h-irace                                   # 1.000 evaluaciones
+python3 scripts/Ejecutor.py ILSQAP h-irace --budget 5000 --nombre h-irace_5K # 5.000 evaluaciones
 bash scripts/configs.sh corridas/ILSQAP/h-irace_trainQAP
 python3 scripts/EjecutorColaAll.py ILSQAP corridas/ILSQAP/h-irace_trainQAP/Subset_1 \
         --test instancias/listas/testQAP_S1.txt
