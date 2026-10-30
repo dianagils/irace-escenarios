@@ -24,9 +24,7 @@
 | `localsearch` | 0, 1, 2 | 0: first improvement + don't look bits, 1: first improvement, 2: best improvement |
 | `perturbation` | 0–9 | tamaño n/16, n/8, n/4, n/2, 3n/4; de 0 a 4 fijo, de 5 a 9 variable |
 | `acceptance` | 0–7 | 0–3: temperatura constante (0, 0.25, 1, ∞), 4–6: restart (1n, 3n, 5n), 7: LSMC |
-| `alpha` | [0, 1] | factor de enfriamiento geométrico |
-
-> ⚠️ Este espacio se **dedujo** de las 240 configuraciones finales de los experimentos y de la ayuda de `qap.c`, porque no se encontró el `parameters.txt` original. En esas configuraciones nunca aparece `acceptance = 0`, y `alpha` toma valores entre 0.03 y 1.
+| `alpha` | [0.01, 1] | factor de enfriamiento geométrico |
 
 ## Preparar
 
