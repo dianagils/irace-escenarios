@@ -1,0 +1,14 @@
+## Opciones de irace propias del escenario (ver la guia de irace).
+## NO pongas aqui parameterFile, targetRunner, execDir, logFile, instancias,
+## seed, maxExperiments, parallel ni instanceSubsetsFile: los agrega
+## scripts/Ejecutor.py en cada corrida a partir de escenario.env.
+
+## 0 si el algoritmo es estocastico (lo normal), 1 si es determinista.
+deterministic = 0
+
+## Decimales para los parametros reales.
+digits = 2
+
+## Configuracion inicial (opcional). Ruta relativa a la carpeta de la corrida:
+## corridas/<NOMBRE>/<experimento>/<corrida>/
+#configurationsFile = "../../../../escenarios/<NOMBRE>/default.txt"

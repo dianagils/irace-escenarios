@@ -1,0 +1,15 @@
+## Espacio de parametros (formato de irace)
+##   <nombre>  "<switch>"  <tipo>  (<dominio>)  [| condicion en R]
+## tipo: c = categorico, o = ordinal, i = entero, r = real
+## El switch se pega al valor tal cual: "--alpha " + 1.5 -> "--alpha 1.5",
+## "--" + mmas -> "--mmas". Los parametros desactivados por su condicion no se pasan.
+##
+## EJEMPLO, reemplazar:
+alpha      "--alpha "      r  (0.0, 5.0)
+ants       "--ants "       i  (5, 100)
+variante   "--"            c  (a, b, c)
+q0         "--q0 "         r  (0.0, 1.0)     | variante == "c"
+
+[forbidden]
+## Combinaciones prohibidas (una expresion de R por linea)
+#(alpha == 0.0) & (ants == 5)

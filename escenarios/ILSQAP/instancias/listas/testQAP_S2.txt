@@ -1,0 +1,15 @@
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.23.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.0.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.25.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.26.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.27.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.12.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.29.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.3.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.4.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.5.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.16.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.8.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.9.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.19.dat
+instancias/InstancesQAP/60rr/tailike/0.00/taillard.60.13.dat

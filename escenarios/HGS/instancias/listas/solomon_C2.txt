@@ -1,0 +1,8 @@
+instancias/solomon/C201.txt
+instancias/solomon/C202.txt
+instancias/solomon/C203.txt
+instancias/solomon/C204.txt
+instancias/solomon/C205.txt
+instancias/solomon/C206.txt
+instancias/solomon/C207.txt
+instancias/solomon/C208.txt

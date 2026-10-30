@@ -1,0 +1,75 @@
+#!/bin/bash
+###############################################################################
+# target-runner de irace para HGS (pyVRP).
+#
+# irace (y scripts/EjecutorColaAll.py) lo invocan como:
+#   ./target-runner <config_id> <instance_id> <seed> <instance> [bound] -ps V -gs V ...
+#
+# y espera en la ULTIMA linea de stdout el valor a MINIMIZAR (el costo de la
+# mejor solucion encontrada).
+###############################################################################
+set -u
+
+error() {
+    echo "$0: error: $*" >&2
+    exit 1
+}
+
+CONFIG_ID="$1"
+INSTANCE_ID="$2"
+SEED="$3"
+INSTANCE="$4"
+shift 4
+# irace pasa un 5to argumento (bound) cuando hay capping; los parametros
+# siempre empiezan con "-", asi que descartamos el bound si esta presente.
+if [ $# -gt 0 ] && [ "${1:0:1}" != "-" ]; then
+    shift
+fi
+CONFIG_PARAMS="$*"
+
+# --- Carpeta del escenario (donde esta este script) -----------------------------
+ESCENARIO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "${ESCENARIO_DIR}/../../scripts/load_env.sh"
+load_env "${ESCENARIO_DIR}/escenario.env"
+
+PYTHON_BIN="${PYTHON_BIN:-${ESCENARIO_DIR}/.venv/bin/python}"
+SOLVER="${ESCENARIO_DIR}/src/SolveVRP.py"
+T="${TIME_LIMIT:-10}"
+INFEASIBLE_COST="${INFEASIBLE_COST:-1000000}"
+
+[ -x "${PYTHON_BIN}" ] || error "no existe el interprete ${PYTHON_BIN} (corre: bash escenarios/HGS/setup.sh)"
+[ -f "${SOLVER}" ]     || error "no existe el solver ${SOLVER}"
+[ -f "${INSTANCE}" ]   || error "no existe la instancia ${INSTANCE}"
+
+# El HGS de pyVRP es de un solo hilo, pero numpy/OpenBLAS crea por defecto un
+# pool del tamano del nro de cores. Se limita a 1 salvo que se pida otra cosa.
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+# --- Ejecucion ---------------------------------------------------------------
+STDOUT="c${CONFIG_ID}-${INSTANCE_ID}-${SEED}.stdout"
+STDERR="c${CONFIG_ID}-${INSTANCE_ID}-${SEED}.stderr"
+
+"${PYTHON_BIN}" "${SOLVER}" -i "${INSTANCE}" -s "${SEED}" -t "${T}" ${CONFIG_PARAMS} \
+    1> "${STDOUT}" 2> "${STDERR}"
+RET=$?
+
+if [ ${RET} -ne 0 ]; then
+    error "${SOLVER} termino con codigo ${RET}; revisa $(pwd)/${STDERR}"
+fi
+
+# SolveVRP.py imprime el costo (res.cost()) en la ultima linea.
+COST=$(tail -n 1 "${STDOUT}" | awk '{print $1}')
+
+# pyVRP devuelve inf cuando la mejor solucion es infactible: irace no acepta
+# Inf, asi que se reemplaza por una penalizacion grande.
+case "${COST}" in
+    inf|Inf|INF|nan|NaN|"") COST="${INFEASIBLE_COST}" ;;
+esac
+
+echo "${COST}"
+
+rm -f "${STDOUT}" "${STDERR}"
+exit 0

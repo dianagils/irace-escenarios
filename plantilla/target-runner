@@ -1,0 +1,67 @@
+#!/bin/bash
+###############################################################################
+# target-runner de irace para <ALGORITMO>.
+#
+# irace (y scripts/EjecutorColaAll.py) lo invocan como:
+#   ./target-runner <config_id> <instance_id> <seed> <instance> [bound] <parametros...>
+#
+# Debe imprimir en la ULTIMA linea de stdout un unico numero: el valor a
+# MINIMIZAR. Si algo falla, debe salir con codigo != 0 (y el motivo en stderr).
+# Se ejecuta dentro de la carpeta de la corrida, asi que las rutas al algoritmo
+# deben construirse desde ESCENARIO_DIR.
+###############################################################################
+set -u
+
+error() {
+    echo "$0: error: $*" >&2
+    exit 1
+}
+
+CONFIG_ID="$1"
+INSTANCE_ID="$2"
+SEED="$3"
+INSTANCE="$4"
+shift 4
+# irace pasa un 5to argumento (bound) cuando hay capping; los parametros
+# siempre empiezan con "-", asi que descartamos el bound si esta presente.
+if [ $# -gt 0 ] && [ "${1:0:1}" != "-" ]; then
+    shift
+fi
+CONFIG_PARAMS="$*"
+
+# --- Carpeta del escenario y escenario.env -----------------------------------
+ESCENARIO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "${ESCENARIO_DIR}/../../scripts/load_env.sh"
+load_env "${ESCENARIO_DIR}/escenario.env"
+
+# TODO: ejecutable del algoritmo (compilado por setup.sh)
+EXE="${ESCENARIO_DIR}/src/<ALGORITMO>/<ejecutable>"
+# TODO: parametros fijos (tiempo, nro de evaluaciones, ...)
+FIXED_PARAMS="--time ${TIME_LIMIT:-10}"
+
+[ -x "${EXE}" ]      || error "no existe ${EXE} (corre: bash escenarios/<NOMBRE>/setup.sh)"
+[ -f "${INSTANCE}" ] || error "no existe la instancia ${INSTANCE}"
+
+# --- Ejecucion ---------------------------------------------------------------
+STDOUT="c${CONFIG_ID}-${INSTANCE_ID}-${SEED}.stdout"
+STDERR="c${CONFIG_ID}-${INSTANCE_ID}-${SEED}.stderr"
+
+# TODO: ajustar los nombres de las opciones de instancia y semilla
+"${EXE}" ${FIXED_PARAMS} -i "${INSTANCE}" --seed "${SEED}" ${CONFIG_PARAMS} \
+    1> "${STDOUT}" 2> "${STDERR}"
+RET=$?
+[ ${RET} -eq 0 ] || error "${EXE} termino con codigo ${RET}; revisa $(pwd)/${STDERR}"
+
+# TODO: extraer el costo de la salida del algoritmo. Ejemplos:
+#   ultima linea:            COST=$(tail -n 1 "${STDOUT}" | awk '{print $1}')
+#   linea "Best <valor>":    COST=$(grep -o -E 'Best [-+0-9.e]+' "${STDOUT}" | tail -n 1 | cut -d ' ' -f2)
+COST=$(tail -n 1 "${STDOUT}" | awk '{print $1}')
+
+if ! [[ "${COST}" =~ ^[-+0-9.eE]+$ ]]; then
+    error "${STDOUT}: la salida no es un numero: '${COST}'"
+fi
+
+echo "${COST}"
+
+rm -f "${STDOUT}" "${STDERR}"
+exit 0

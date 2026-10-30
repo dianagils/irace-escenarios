@@ -1,0 +1,15 @@
+# Todo lo que se genera al correr
+corridas/
+tuners/
+
+# Entornos y compilados
+.venv/
+__pycache__/
+*.pyc
+*.o
+
+# Resultados de irace sueltos
+*.Rdata
+*.stdout
+*.stderr
+Salida

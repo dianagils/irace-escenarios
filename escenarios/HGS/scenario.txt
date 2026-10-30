@@ -1,0 +1,9 @@
+## Opciones de irace propias del escenario HGS.
+## parameterFile, targetRunner, instancias, seed, maxExperiments y parallel
+## los agrega scripts/Ejecutor.py al final de la copia de este archivo en cada
+## corrida (con los valores de escenario.env).
+
+## El algoritmo es estocastico.
+deterministic = 0
+
+testType = "F-test"

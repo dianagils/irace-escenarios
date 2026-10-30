@@ -1,0 +1,11 @@
+instancias/solomon/R201.txt
+instancias/solomon/R202.txt
+instancias/solomon/R203.txt
+instancias/solomon/R204.txt
+instancias/solomon/R205.txt
+instancias/solomon/R206.txt
+instancias/solomon/R207.txt
+instancias/solomon/R208.txt
+instancias/solomon/R209.txt
+instancias/solomon/R210.txt
+instancias/solomon/R211.txt

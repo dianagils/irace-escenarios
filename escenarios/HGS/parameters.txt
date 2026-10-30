@@ -1,0 +1,22 @@
+## Espacio de parametros de pyVRP (equivalente a baseTuning/SolveVRP.params de ParamILS)
+##
+## formato:  <nombre>  "<switch>"  <tipo>  <valores>
+##   o = ordinal (dominio discreto ordenado), i = entero, r = real
+##
+## Se usan los MISMOS niveles discretos que ParamILS para que la comparacion
+## entre ambos sintonizadores sea sobre el mismo espacio de busqueda.
+
+ps  "-ps "  o  (5, 15, 25, 35, 45)
+gs  "-gs "  o  (10, 20, 40, 70, 100)
+ne  "-ne "  o  (0.1, 0.2, 0.4, 0.6, 0.8)
+nc  "-nc "  o  (0.1, 0.2, 0.4, 0.6, 0.8)
+xi  "-xi "  o  (0.1, 0.2, 0.4, 0.6, 0.8)
+
+## Variante que aprovecha que irace SI maneja dominios continuos/enteros.
+## Para usarla, comenta el bloque de arriba y descomenta este:
+#
+# ps  "-ps "  i  (5, 45)
+# gs  "-gs "  i  (10, 100)
+# ne  "-ne "  r  (0.1, 0.8)
+# nc  "-nc "  r  (0.1, 0.8)
+# xi  "-xi "  r  (0.1, 0.8)

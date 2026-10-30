@@ -1,0 +1,59 @@
+#!/bin/bash
+###############################################################################
+# target-runner de irace para ILS-QAP.
+#
+# irace (y scripts/EjecutorColaAll.py) lo invocan como:
+#   ./target-runner <config_id> <instance_id> <seed> <instance> [bound] --localsearch V ...
+#
+# Imprime en la ULTIMA linea el costo de la mejor solucion encontrada.
+###############################################################################
+set -u
+
+error() {
+    echo "$0: error: $*" >&2
+    exit 1
+}
+
+CONFIG_ID="$1"
+INSTANCE_ID="$2"
+SEED="$3"
+INSTANCE="$4"
+shift 4
+# irace pasa un 5to argumento (bound) cuando hay capping; los parametros
+# siempre empiezan con "-", asi que descartamos el bound si esta presente.
+if [ $# -gt 0 ] && [ "${1:0:1}" != "-" ]; then
+    shift
+fi
+CONFIG_PARAMS="$*"
+
+# --- Carpeta del escenario y escenario.env -----------------------------------
+ESCENARIO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "${ESCENARIO_DIR}/../../scripts/load_env.sh"
+load_env "${ESCENARIO_DIR}/escenario.env"
+
+EXE="${ESCENARIO_DIR}/src/ils-qap/ilsqap"
+FIXED_PARAMS="--trials 1 --time ${TIME_LIMIT:-10}"
+
+[ -x "${EXE}" ]      || error "no existe ${EXE} (corre: bash escenarios/ILSQAP/setup.sh)"
+[ -f "${INSTANCE}" ] || error "no existe la instancia ${INSTANCE}"
+
+# --- Ejecucion ---------------------------------------------------------------
+STDOUT="c${CONFIG_ID}-${INSTANCE_ID}-${SEED}.stdout"
+STDERR="c${CONFIG_ID}-${INSTANCE_ID}-${SEED}.stderr"
+
+"${EXE}" ${FIXED_PARAMS} -i "${INSTANCE}" --seed "${SEED}" ${CONFIG_PARAMS} \
+    1> "${STDOUT}" 2> "${STDERR}"
+RET=$?
+[ ${RET} -eq 0 ] || error "${EXE} termino con codigo ${RET}; revisa $(pwd)/${STDERR}"
+
+# ilsqap imprime "best <costo>  time <t>" cada vez que mejora: la ultima es la mejor
+COST=$(grep '^best' "${STDOUT}" | tail -n 1 | awk '{print $2}')
+if ! [[ "${COST}" =~ ^[-+0-9.eE]+$ ]]; then
+    error "${STDOUT}: no aparece 'best <costo>' en la salida; revisa $(pwd)/${STDOUT}"
+fi
+
+echo "${COST}"
+
+# ilsqap deja un .sum y un .rep por ejecucion (con el nombre de la instancia)
+rm -f "${STDOUT}" "${STDERR}" ./*.sum ./*.rep
+exit 0

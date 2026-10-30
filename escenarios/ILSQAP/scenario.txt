@@ -1,0 +1,7 @@
+## Opciones de irace propias del escenario ILS-QAP.
+## parameterFile, targetRunner, instancias, seed, maxExperiments, parallel e
+## instanceSubsetsFile los agrega scripts/Ejecutor.py al final de la copia de
+## este archivo en cada corrida (con los valores de escenario.env).
+
+## Decimales para los parametros reales.
+digits = 2

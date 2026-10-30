@@ -1,0 +1,15 @@
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749227.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749230.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749237.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749240.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749241.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749244.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749245.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749246.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749233.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749250.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749252.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749254.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749255.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749231.n60.K60.m10.A20.00.B4.00.sp20.00.dat
+instancias/InstancesQAP/60-0.90/ES/0.90/EuclideanStructured.1256749256.n60.K60.m10.A20.00.B4.00.sp20.00.dat
