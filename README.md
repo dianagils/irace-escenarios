@@ -11,8 +11,6 @@ Todos los escenarios comparten los mismos scripts. Para agregar uno nuevo basta 
 | [`HGS`](escenarios/HGS/README.md) | HGS (PyVRP 0.5.0) | VRPTW | Solomon + Homberger | subsets por tipo y por conjunto |
 | [`ILSQAP`](escenarios/ILSQAP/README.md) | ILS-QAP V0.9 | QAP | QAP n=60 (ES + tai-like) | subsets por tipo de instancia |
 
-Pendientes de agregar: MMAS-QAP, PSO-X, SPSO2011.
-
 ## Estructura
 
 ```
